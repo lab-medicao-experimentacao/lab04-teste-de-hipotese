@@ -31,9 +31,14 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 │   └── README.md          # Orientações para os dados reais
 ├── src/
 │   ├── app.py             # Página inicial do dashboard
+│   ├── aplicacao.py       # Testes aplicados ao conjunto simulado + interpretação
+│   ├── dados_provisorio.py # Gerador provisório (até existir src/dados.py)
 │   ├── estilo.py          # Cores e rótulos de cada teste
 │   └── testes.py          # t pareado e Wilcoxon pareado
 └── tests/
+    ├── test_aplicacao.py
+    ├── test_app.py        # Teste de fumaça do dashboard (AppTest)
+    ├── test_dados_provisorio.py
     └── test_testes.py     # Testes de unidade de src/testes.py
 ```
 
