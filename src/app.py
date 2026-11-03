@@ -2,6 +2,8 @@
 
 import streamlit as st
 
+import aplicacao
+
 
 st.set_page_config(page_title="Lab04 — Testes de hipótese", layout="wide")
 
@@ -44,7 +46,26 @@ st.markdown(
     "teste compara, a região de rejeição e o significado do p-valor."
 )
 st.subheader("Aplicação a um conjunto simulado")
-st.markdown(
-    "**Estatísticas, p-valores e interpretação:** aguardando a aplicação dos "
-    "dois testes ao conjunto simulado."
+
+
+@st.cache_data
+def exemplo_simulado():
+    antes, depois = aplicacao.conjunto_exemplo()
+    return antes, depois, aplicacao.aplicar_testes(antes, depois)
+
+
+antes, depois, resultados = exemplo_simulado()
+mediana_antes, mediana_depois = aplicacao.medianas(antes, depois)
+st.caption(
+    f"Dados simulados com o gerador provisório (será substituído pelo gerador "
+    f"calibrado com os dados reais): {aplicacao.N_EXEMPLO} pares, efeito "
+    f"verdadeiro de {aplicacao.EFEITO_EXEMPLO:.0%} de redução no tempo de build, "
+    f"semente {aplicacao.SEMENTE}, teste bicaudal (provisório) e "
+    f"α = {aplicacao.ALFA:.2f}".replace(".", ",") + "."
 )
+col_antes, col_depois = st.columns(2)
+col_antes.metric("Mediana antes", f"{mediana_antes:.1f} s".replace(".", ","))
+col_depois.metric("Mediana depois", f"{mediana_depois:.1f} s".replace(".", ","))
+st.dataframe(resultados, hide_index=True)
+st.caption("Estatística: t para o t pareado e W+ para o Wilcoxon pareado.")
+st.markdown(aplicacao.interpretar(resultados, aplicacao.EFEITO_EXEMPLO))
