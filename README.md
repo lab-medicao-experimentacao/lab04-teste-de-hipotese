@@ -29,13 +29,18 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 │   └── enunciado.md       # Requisitos originais do laboratório
 ├── data/
 │   └── README.md          # Orientações para os dados reais
-└── src/
-    └── app.py             # Página inicial do dashboard
+├── src/
+│   ├── app.py             # Página inicial do dashboard
+│   ├── estilo.py          # Cores e rótulos de cada teste
+│   └── testes.py          # t pareado e Wilcoxon pareado
+└── tests/
+    └── test_testes.py     # Testes de unidade de src/testes.py
 ```
 
 - `doc/`: enunciado e documentação de apoio. A entrega final será o dashboard, conforme o enunciado.
 - `data/`: amostra real em CSV e documentação de sua origem e coleta.
 - `src/`: código de geração dos dados simulados, aplicação dos testes e construção dos gráficos G1 e G2. Os arquivos serão acrescentados nas respectivas tarefas.
+- `tests/`: testes de unidade (biblioteca padrão `unittest`).
 
 A página `src/app.py` contém as seções do dashboard e os pontos de integração de G1 e G2. Cada responsável deve incluir seu gráfico com `st.plotly_chart(fig)` e o texto explicativo de 2 a 4 frases na seção correspondente. Cenário e resultados pendentes estão identificados na página.
 
@@ -65,6 +70,12 @@ python -m streamlit run src/app.py
 ```
 
 No Windows (PowerShell), a ativação é feita com `.venv\Scripts\Activate.ps1`.
+
+Com o ambiente ativo, os testes de unidade rodam a partir da raiz do repositório:
+
+```bash
+python -m unittest discover -s tests -v
+```
 
 As simulações deverão usar semente fixa, por exemplo `numpy.random.default_rng(42)`, para permitir a reprodução dos resultados.
 
