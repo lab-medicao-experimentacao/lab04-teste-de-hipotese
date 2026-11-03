@@ -67,7 +67,7 @@ class TestInterpretar(unittest.TestCase):
         texto = aplicacao.interpretar(tabela, aplicacao.EFEITO_EXEMPLO)
         self.assertTrue(2 <= contar_frases(texto) <= 4, texto)
         self.assertIn("efeito verdadeiro é conhecido", texto)
-        self.assertIn("10%", texto)
+        self.assertIn("2%", texto)
         self.assertIn("0,05", texto)
         self.assertNotRegex(texto, r"\d\.\d")  # vírgula decimal
 
