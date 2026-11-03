@@ -19,6 +19,14 @@ class TestApp(unittest.TestCase):
         self.assertIn("simulados", " ".join(c.value for c in at.caption))
         self.assertIn("provisório", " ".join(c.value for c in at.caption))
 
+    def test_g2_presente(self):
+        at = AppTest.from_file(str(APP)).run(timeout=30)
+        self.assertEqual(len(at.exception), 0, at.exception)
+        self.assertEqual(len(at.get("plotly_chart")), 1)
+        explicacao = " ".join(m.value for m in at.markdown)
+        self.assertIn("Explicação dos testes", explicacao)
+        self.assertIn("W⁺ = 16", explicacao)
+
 
 if __name__ == "__main__":
     unittest.main()

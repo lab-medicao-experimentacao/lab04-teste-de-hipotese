@@ -3,6 +3,7 @@
 import streamlit as st
 
 import aplicacao
+from graficos import g2
 
 
 st.set_page_config(page_title="Lab04 — Testes de hipótese", layout="wide")
@@ -36,16 +37,6 @@ st.markdown(
 )
 
 st.header("3. Como os testes funcionam")
-# Integração G2: gerar a figura sob H₀ e usar st.plotly_chart(fig).
-st.info(
-    "G2 — Distribuição da estatística sob H₀, região de rejeição e área do "
-    "p-valor de um exemplo: aguardando implementação."
-)
-st.markdown(
-    "**Explicação dos testes:** a preencher com 2 a 4 frases sobre o que cada "
-    "teste compara, a região de rejeição e o significado do p-valor."
-)
-st.subheader("Aplicação a um conjunto simulado")
 
 
 @st.cache_data
@@ -55,6 +46,16 @@ def exemplo_simulado():
 
 
 antes, depois, resultados = exemplo_simulado()
+
+# Integração G2: mesmo conjunto de exemplo da Aplicação abaixo.
+st.plotly_chart(
+    g2.figura(antes, depois, aplicacao.ALTERNATIVA, aplicacao.ALFA), width="stretch"
+)
+st.markdown(
+    "**Explicação dos testes:** "
+    + g2.explicacao(antes, depois, aplicacao.ALTERNATIVA, aplicacao.ALFA)
+)
+st.subheader("Aplicação a um conjunto simulado")
 mediana_antes, mediana_depois = aplicacao.medianas(antes, depois)
 st.caption(
     f"Dados simulados com o gerador provisório (será substituído pelo gerador "
