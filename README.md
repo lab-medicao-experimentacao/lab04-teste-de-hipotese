@@ -11,7 +11,8 @@ Laboratório de Medição e Experimentação de Software para comparar testes de
 
 - **Par P2:** teste t pareado × Wilcoxon pareado.
 - **Tecnologias:** Python, Streamlit e Plotly.
-- **Cenário, pergunta, hipóteses e fonte dos dados reais:** a definir pelo grupo.
+- **Dados reais:** 30 pares de tempo de build do [fzf](https://github.com/junegunn/fzf) v0.67.0 sem cache e com o cache de compilação do Go aquecido ([coleta](data/README.md)).
+- **Cenário, pergunta e hipóteses:** a definir pelo grupo.
 
 Os dados deverão preservar a correspondência entre as duas medições de cada par. Antes de simular, o grupo deverá registrar a expectativa sobre qual teste terá melhor desempenho e sua justificativa.
 
@@ -28,9 +29,13 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 ├── doc/
 │   └── enunciado.md       # Requisitos originais do laboratório
 ├── data/
-│   └── README.md          # Orientações para os dados reais
+│   ├── README.md          # Origem e procedimento de coleta dos dados reais
+│   └── amostra.csv        # 30 pares: tempo de build sem e com cache
+├── scripts/
+│   └── coletar_builds.py  # Coleta dos dados reais (exige git e Go)
 ├── src/
 │   ├── app.py             # Página inicial do dashboard
+│   ├── amostra.py         # Leitura e validação de data/amostra.csv
 │   ├── aplicacao.py       # Testes aplicados ao conjunto simulado + interpretação
 │   ├── dados_provisorio.py # Gerador provisório (até existir src/dados.py)
 │   ├── estilo.py          # Cores e rótulos de cada teste
@@ -38,6 +43,7 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 │   └── graficos/
 │       └── g2.py          # G2: estatística sob H₀, região de rejeição e p-valor
 └── tests/
+    ├── test_amostra.py
     ├── test_aplicacao.py
     ├── test_app.py        # Teste de fumaça do dashboard (AppTest)
     ├── test_dados_provisorio.py
@@ -47,6 +53,7 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 
 - `doc/`: enunciado e documentação de apoio. A entrega final será o dashboard, conforme o enunciado.
 - `data/`: amostra real em CSV e documentação de sua origem e coleta.
+- `scripts/`: script que coletou a amostra real; não faz parte do dashboard.
 - `src/`: código de geração dos dados simulados, aplicação dos testes e construção dos gráficos G1 e G2. Os arquivos serão acrescentados nas respectivas tarefas.
 - `tests/`: testes de unidade (biblioteca padrão `unittest`).
 

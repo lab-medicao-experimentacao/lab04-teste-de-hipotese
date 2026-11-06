@@ -2,6 +2,7 @@
 
 import streamlit as st
 
+import amostra
 import aplicacao
 from graficos import g2
 
@@ -23,8 +24,10 @@ st.markdown(
     "**Pergunta:** a definir.\n\n"
     "**H₀:** a definir.\n\n"
     "**H₁:** a definir.\n\n"
-    "**Fonte e procedimento de coleta:** a definir.\n\n"
-    "**Quantidade de pares:** a definir.\n\n"
+    f"**Fonte e procedimento de coleta:** {amostra.FONTE}. Detalhes em "
+    "[`data/README.md`](https://github.com/lab-medicao-experimentacao/"
+    "lab04-teste-de-hipotese/blob/main/data/README.md).\n\n"
+    f"**Quantidade de pares:** {amostra.n_pares()}.\n\n"
     "**Expectativa antes da simulação:** a registrar pelo grupo, com justificativa."
 )
 
