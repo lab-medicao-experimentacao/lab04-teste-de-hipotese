@@ -42,12 +42,14 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 │   ├── estilo.py          # Cores e rótulos de cada teste
 │   ├── testes.py          # t pareado e Wilcoxon pareado
 │   └── graficos/
+│       ├── g1.py          # G1: histogramas real × simulado de cada condição
 │       └── g2.py          # G2: estatística sob H₀, região de rejeição e p-valor
 └── tests/
     ├── test_amostra.py
     ├── test_aplicacao.py
     ├── test_app.py        # Teste de fumaça do dashboard (AppTest)
     ├── test_dados.py
+    ├── test_g1.py
     ├── test_parametros.py
     ├── test_g2.py
     └── test_testes.py     # Testes de unidade de src/testes.py

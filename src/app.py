@@ -4,7 +4,7 @@ import streamlit as st
 
 import amostra
 import aplicacao
-from graficos import g2
+from graficos import g1, g2
 
 
 st.set_page_config(page_title="Lab04 — Testes de hipótese", layout="wide")
@@ -32,11 +32,22 @@ st.markdown(
 )
 
 st.header("2. Os dados")
-# Integração G1: carregar a amostra, gerar a figura e usar st.plotly_chart(fig).
-st.info("G1 — Histogramas dos dados reais e simulados: aguardando implementação.")
+
+
+@st.cache_data
+def conjuntos_g1():
+    return g1.conjuntos()
+
+
+dados_g1 = conjuntos_g1()
+st.plotly_chart(g1.figura(dados_g1["real"], dados_g1["simulado"]), width="stretch")
+st.caption(
+    f"Simulado: {amostra.n_pares()} pares gerados com os parâmetros estimados da "
+    f"amostra, semente {g1.SEMENTE} e o efeito observado no cache real."
+)
 st.markdown(
-    "**Explicação dos dados:** a preencher com 2 a 4 frases sobre a forma das "
-    "distribuições e a escolha dos parâmetros da simulação."
+    "**Explicação dos dados:** "
+    + g1.explicacao(dados_g1["real"], dados_g1["simulado"])
 )
 
 st.header("3. Como os testes funcionam")

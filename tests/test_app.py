@@ -22,10 +22,19 @@ class TestApp(unittest.TestCase):
     def test_g2_presente(self):
         at = AppTest.from_file(str(APP)).run(timeout=30)
         self.assertEqual(len(at.exception), 0, at.exception)
-        self.assertEqual(len(at.get("plotly_chart")), 1)
+        self.assertEqual(len(at.get("plotly_chart")), 2)  # G1 e G2
         explicacao = " ".join(m.value for m in at.markdown)
         self.assertIn("Explicação dos testes", explicacao)
         self.assertIn("W⁺ = 50", explicacao)
+
+    def test_g1_presente(self):
+        at = AppTest.from_file(str(APP)).run(timeout=30)
+        self.assertEqual(len(at.exception), 0, at.exception)
+        explicacao = " ".join(m.value for m in at.markdown)
+        self.assertIn("Explicação dos dados", explicacao)
+        self.assertIn("lognormal", explicacao)
+        self.assertNotIn("a preencher", explicacao)
+        self.assertIn("semente 42", " ".join(c.value for c in at.caption))
 
 
 if __name__ == "__main__":
