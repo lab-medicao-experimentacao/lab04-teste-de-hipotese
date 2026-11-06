@@ -17,7 +17,7 @@ class TestApp(unittest.TestCase):
         self.assertIn("Aplicação a um conjunto simulado", subtitulos)
         self.assertEqual(len(at.dataframe), 1)
         self.assertIn("simulados", " ".join(c.value for c in at.caption))
-        self.assertIn("provisório", " ".join(c.value for c in at.caption))
+        self.assertIn("calibrado pela amostra real", " ".join(c.value for c in at.caption))
 
     def test_g2_presente(self):
         at = AppTest.from_file(str(APP)).run(timeout=30)
@@ -25,7 +25,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(len(at.get("plotly_chart")), 1)
         explicacao = " ".join(m.value for m in at.markdown)
         self.assertIn("Explicação dos testes", explicacao)
-        self.assertIn("W⁺ = 16", explicacao)
+        self.assertIn("W⁺ = 50", explicacao)
 
 
 if __name__ == "__main__":

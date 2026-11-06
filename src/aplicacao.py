@@ -1,15 +1,15 @@
 """Aplicação dos dois testes a um conjunto simulado, com interpretação.
 
-O conjunto de exemplo vem do gerador provisório (``dados_provisorio``); quando
-``src/dados.py`` (Pessoa 2) existir, basta trocar o import de ``gerar_pares``.
-O mesmo conjunto deve ser reutilizado no G2 via ``conjunto_exemplo()``.
+O conjunto de exemplo vem do gerador calibrado com a amostra real
+(``dados.gerar_pares``). O mesmo conjunto deve ser reutilizado no G2 via
+``conjunto_exemplo()``.
 """
 
 import numpy as np
 import pandas as pd
 
 import testes
-from dados_provisorio import gerar_pares
+from dados import gerar_pares
 from estilo import ROTULOS
 
 

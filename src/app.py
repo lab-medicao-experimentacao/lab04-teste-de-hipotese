@@ -61,8 +61,8 @@ st.markdown(
 st.subheader("Aplicação a um conjunto simulado")
 mediana_antes, mediana_depois = aplicacao.medianas(antes, depois)
 st.caption(
-    f"Dados simulados com o gerador provisório (será substituído pelo gerador "
-    f"calibrado com os dados reais): {aplicacao.N_EXEMPLO} pares, efeito "
+    f"Dados simulados com o gerador calibrado pela amostra real: "
+    f"{aplicacao.N_EXEMPLO} pares, efeito "
     f"verdadeiro de {aplicacao.EFEITO_EXEMPLO:.0%} de redução no tempo de build, "
     f"semente {aplicacao.SEMENTE}, teste bicaudal (provisório) e "
     f"α = {aplicacao.ALFA:.2f}".replace(".", ",") + "."

@@ -150,8 +150,8 @@ class TestFigura(unittest.TestCase):
         fig = g2.figura(self.antes, self.depois, "two-sided", 0.05)
         nomes = " | ".join(tr.name for tr in fig.data)
         self.assertIn("região de rejeição (α = 0,05", nomes)
-        self.assertIn("área do p-valor (p = 0,015)", nomes)
-        self.assertIn("área do p-valor (p = 0,010)", nomes)
+        self.assertIn("área do p-valor (p = 0,697)", nomes)
+        self.assertIn("área do p-valor (p = 0,599)", nomes)
 
     def test_empates_usam_aproximacao_normal(self):
         antes, depois = np.round(self.antes), np.round(self.depois)

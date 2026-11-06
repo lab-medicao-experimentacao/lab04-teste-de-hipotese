@@ -37,7 +37,8 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 │   ├── app.py             # Página inicial do dashboard
 │   ├── amostra.py         # Leitura e validação de data/amostra.csv
 │   ├── aplicacao.py       # Testes aplicados ao conjunto simulado + interpretação
-│   ├── dados_provisorio.py # Gerador provisório (até existir src/dados.py)
+│   ├── dados.py           # Geração dos pares simulados, calibrada pela amostra
+│   ├── parametros.py      # Parâmetros da simulação estimados da amostra real
 │   ├── estilo.py          # Cores e rótulos de cada teste
 │   ├── testes.py          # t pareado e Wilcoxon pareado
 │   └── graficos/
@@ -46,7 +47,8 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
     ├── test_amostra.py
     ├── test_aplicacao.py
     ├── test_app.py        # Teste de fumaça do dashboard (AppTest)
-    ├── test_dados_provisorio.py
+    ├── test_dados.py
+    ├── test_parametros.py
     ├── test_g2.py
     └── test_testes.py     # Testes de unidade de src/testes.py
 ```
