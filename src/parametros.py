@@ -22,8 +22,9 @@ Justificativa, a partir de ``data/amostra.csv``:
   verdadeira para o t pareado e para o Wilcoxon.
 
 A amostra tem mais builds lentos (outliers) do que uma lognormal com esse
-desvio produz; o modelo base não os reproduz, e a proporção observada fica
-registrada para o cenário de violação de pressupostos (Q3, Sprint 2).
+desvio produz; o modelo base não os reproduz, e a proporção observada
+(``prop_lentos``) fica registrada para o cenário de violação de pressupostos
+(Q3, Sprint 2).
 """
 
 from functools import lru_cache
@@ -41,11 +42,15 @@ import amostra
 EFEITOS = (0.0, 0.02, 0.04, 0.06, 0.08, 0.10)
 
 
-def _outliers(x):
-    """Quantidade de valores fora de [Q1 − 1,5·IQR, Q3 + 1,5·IQR]."""
+def _outliers(x, so_acima=False):
+    """Quantidade de valores fora de [Q1 − 1,5·IQR, Q3 + 1,5·IQR].
+
+    Com ``so_acima=True``, conta só os acima de Q3 + 1,5·IQR (builds lentos).
+    """
     q1, q3 = np.percentile(x, [25, 75])
     iqr = q3 - q1
-    return int(np.sum((x < q1 - 1.5 * iqr) | (x > q3 + 1.5 * iqr)))
+    acima = x > q3 + 1.5 * iqr
+    return int(np.sum(acima if so_acima else acima | (x < q1 - 1.5 * iqr)))
 
 
 def descritivas(antes, depois):
@@ -78,7 +83,8 @@ def estimar(antes, depois):
         sigma_ruido: desvio-padrão do log próprio de cada build;
         correlacao: correlação entre ``log(antes)`` e ``log(depois)``, limitada a [0, 1];
         efeito_real: redução proporcional observada, ``1 − exp(média de log(depois/antes))``;
-        prop_outliers: proporção de outliers em antes (para a Q3).
+        prop_lentos: proporção de builds lentos em antes, acima de
+            Q3 + 1,5·IQR (para a Q3).
     """
     antes = np.asarray(antes, dtype=float)
     depois = np.asarray(depois, dtype=float)
@@ -95,7 +101,7 @@ def estimar(antes, depois):
         "sigma_ruido": float(np.sqrt(1 - correlacao) * sigma_total),
         "correlacao": correlacao,
         "efeito_real": float(1 - np.exp(np.mean(log_d - log_a))),
-        "prop_outliers": _outliers(antes) / antes.size,
+        "prop_lentos": _outliers(antes, so_acima=True) / antes.size,
     }
 
 
@@ -124,17 +130,16 @@ def justificativa(parametros=None):
     p = da_amostra() if parametros is None else parametros
     return " ".join([
         f"Os tempos de build reais são positivos e assimétricos à direita, por "
-        f"isso a simulação usa uma lognormal com a mediana da amostra sem cache "
-        f"({_num(p['mediana'])} s).",
-        f"O desvio do log ({_num(p['sigma_rodada'] ** 2 + p['sigma_ruido'] ** 2, 4)} "
-        f"de variância) foi dividido pela correlação entre as duas medições de "
-        f"cada rodada ({_num(p['correlacao'])}): uma parte é do estado da "
-        f"máquina, comum ao par (σ = {_num(p['sigma_rodada'], 3)}), e o resto é "
-        f"ruído de cada build (σ = {_num(p['sigma_ruido'], 3)}).",
+        f"isso a simulação usa uma lognormal, com mediana estimada pela média do "
+        f"log dos tempos sem cache ({_num(p['mediana'])} s).",
+        f"A variância do log do tempo foi dividida conforme a correlação entre "
+        f"as duas medições de cada rodada ({_num(p['correlacao'])}): uma parte "
+        f"vem do estado da máquina, comum ao par (σ = {_num(p['sigma_rodada'], 3)}), "
+        f"e o resto é ruído de cada build (σ = {_num(p['sigma_ruido'], 3)}).",
         f"O efeito simulado é uma redução proporcional da mediana, de 0 a "
         f"{EFEITOS[-1]:.0%}; o cache real reduziu o tempo em "
         f"{p['efeito_real']:.0%}, efeito grande demais para diferenciar os testes.",
-        f"A amostra tem {p['prop_outliers']:.0%} de builds lentos (outliers), "
-        f"que o modelo base não reproduz e que serão usados no cenário de "
-        f"violação de pressupostos.",
+        f"Na amostra, {p['prop_lentos']:.0%} dos builds sem cache foram lentos "
+        f"(outliers acima de Q3 + 1,5·IQR); o modelo base não os reproduz, e "
+        f"essa proporção servirá ao cenário de violação de pressupostos.",
     ])
