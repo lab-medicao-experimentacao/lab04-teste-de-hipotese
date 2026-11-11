@@ -41,6 +41,7 @@ Para as simulações da Sprint 2, esperamos maior poder do t pareado com diferen
 │   ├── dados.py           # Geração dos pares simulados, calibrada pela amostra
 │   ├── parametros.py      # Parâmetros da simulação estimados da amostra real
 │   ├── estilo.py          # Cores e rótulos de cada teste
+│   ├── simulacao.py       # Q1–Q3: erro tipo I e poder (10.000 repetições, semente 42)
 │   ├── testes.py          # t pareado e Wilcoxon pareado
 │   └── graficos/
 │       ├── g1.py          # G1: histogramas real × simulado de cada condição
