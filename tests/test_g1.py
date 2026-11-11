@@ -69,7 +69,7 @@ class TestFigura(unittest.TestCase):
             self.assertEqual(eixo.title.text, "Tempo de build (s)")
         for eixo in (layout.yaxis, layout.yaxis2):
             self.assertEqual(eixo.title.text, "Quantidade de builds")
-        self.assertEqual(layout.barmode, "overlay")
+        self.assertEqual(layout.barmode, "group")
         legenda = [t.name for t in self.fig.data if t.showlegend]
         self.assertEqual(legenda, ["Real (n = 30)", "Simulado (n = 30)"])
         self.assertEqual({t.marker.color for t in self.fig.data}, set(CORES_DADOS.values()))

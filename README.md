@@ -86,8 +86,10 @@ Como alternativa, use Python 3.12 com um ambiente virtual:
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
-python -m streamlit run src/app.py
+python -m streamlit run src/app.py --server.headless=true
 ```
+
+Depois de preparar e ativar o ambiente, basta executar o último comando na raiz do repositório e abrir o endereço indicado no terminal (por padrão, http://localhost:8501).
 
 No Windows (PowerShell), a ativação é feita com `.venv\Scripts\Activate.ps1`.
 

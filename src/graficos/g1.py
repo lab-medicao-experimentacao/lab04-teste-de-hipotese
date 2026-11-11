@@ -1,7 +1,7 @@
 """G1: dados reais ao lado dos simulados, um histograma por condição.
 
 Um subgráfico por condição (sem cache e com cache). Em cada um, os
-histogramas real e simulado ficam sobrepostos, com as mesmas classes, para
+histogramas real e simulado ficam lado a lado em cada classe, para
 que a forma possa ser comparada diretamente. As condições têm escalas
 próprias porque o cache reduz o tempo em cerca de 11 vezes.
 
@@ -67,7 +67,7 @@ def figura(real, simulado):
         fig.update_yaxes(title_text="Quantidade de builds", row=1, col=col)
     fig.update_layout(
         title={"text": "G1 — Tempo de build real × simulado, por condição"},
-        barmode="overlay", separators=",.", height=460,
+        barmode="group", separators=",.", height=460,
         legend={"orientation": "h", "yanchor": "top", "y": -0.2, "xanchor": "left", "x": 0},
         margin={"b": 110},
     )
@@ -109,7 +109,7 @@ def explicacao(real, simulado, p=None):
         f"ficam na mesma faixa dos reais (medianas de {_num(np.median(sa))} s e "
         f"{_num(np.median(sd))} s); {_frase_outliers(ra, sa)}.",
         f"Nas simulações de erro tipo I e poder, o efeito vai de 0 a "
-        f"{parametros.EFEITOS[-1]:.0%}, porque {p['efeito_real']:.0%} seria "
-        f"detectado sempre pelos dois testes, e os builds lentos serão "
-        f"exagerados no cenário de violação de pressupostos.",
+        f"{parametros.EFEITOS[-1]:.0%} na faixa planejada, para comparar a "
+        f"capacidade dos testes de detectar reduções menores que os "
+        f"{p['efeito_real']:.0%} observados na amostra.",
     ])
