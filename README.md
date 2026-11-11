@@ -12,9 +12,10 @@ Laboratório de Medição e Experimentação de Software para comparar testes de
 - **Par P2:** teste t pareado × Wilcoxon pareado.
 - **Tecnologias:** Python, Streamlit e Plotly.
 - **Dados reais:** 30 pares de tempo de build do [fzf](https://github.com/junegunn/fzf) v0.67.0 sem cache e com o cache de compilação do Go aquecido ([coleta](data/README.md)).
-- **Cenário, pergunta e hipóteses:** a definir pelo grupo.
+- **Pergunta:** o cache de compilação altera o tempo de build do fzf?
+- **Hipóteses:** a diferença é o tempo com cache menos o tempo sem cache. No t pareado, H₀ afirma que a média das diferenças é zero e H₁ que ela é diferente de zero. No Wilcoxon pareado, H₀ afirma que a distribuição das diferenças é simétrica em torno de zero e, sob simetria, H₁ afirma que seu centro é diferente de zero. Os dois testes são bicaudais.
 
-Os dados deverão preservar a correspondência entre as duas medições de cada par. Antes de simular, o grupo deverá registrar a expectativa sobre qual teste terá melhor desempenho e sua justificativa.
+Para as simulações da Sprint 2, esperamos maior poder do t pareado com diferenças próximas da normalidade e vantagem do Wilcoxon quando diferenças simétricas tiverem valores extremos, pois os postos limitam a influência da magnitude desses valores. Essa previsão foi registrada após o exemplo da Sprint 1.
 
 ## Organização
 
@@ -61,7 +62,7 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 - `src/`: código de geração dos dados simulados, aplicação dos testes e construção dos gráficos G1 e G2. Os arquivos serão acrescentados nas respectivas tarefas.
 - `tests/`: testes de unidade (biblioteca padrão `unittest`).
 
-A página `src/app.py` contém as seções do dashboard e os pontos de integração de G1 e G2. Cada responsável deve incluir seu gráfico com `st.plotly_chart(fig)` e o texto explicativo de 2 a 4 frases na seção correspondente. Cenário e resultados pendentes estão identificados na página.
+A página `src/app.py` apresenta o cenário, G1, G2 e a interpretação dos testes aplicados a um conjunto simulado.
 
 ## Ambiente
 
