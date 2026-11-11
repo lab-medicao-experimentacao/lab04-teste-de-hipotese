@@ -346,8 +346,8 @@ def explicacao(antes, depois, alternativa, alfa):
         f"diferenças positivas (W⁺), cuja distribuição sob H₀ supõe cada sinal "
         f"igualmente provável.",
         f"A região de rejeição reúne os valores mais extremos da estatística, "
-        f"improváveis se H₀ for verdadeira, com probabilidade total "
-        f"α = {_num(alfa)}, e fica {caudas} "
+        f"improváveis se H₀ for verdadeira, e para o nível nominal α = {_num(alfa)} "
+        f"fica {caudas} "
         f"({_descrever(t['regiao'], 't', 3)}; {regiao_w}).",
         f"No exemplo, t = {_num(t['estatistica'])} dá {_p(t['p_valor'])} e "
         f"W⁺ = {w_obs} dá {_p(w['p_valor'])}: supondo H₀ verdadeira, essa é a "
