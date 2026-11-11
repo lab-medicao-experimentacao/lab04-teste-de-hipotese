@@ -34,6 +34,7 @@ Os dados deverão preservar a correspondência entre as duas medições de cada 
 │   ├── aplicacao.py       # Testes aplicados ao conjunto simulado + interpretação
 │   ├── dados_provisorio.py # Gerador provisório (até existir src/dados.py)
 │   ├── estilo.py          # Cores e rótulos de cada teste
+│   ├── simulacao.py       # Q1–Q3: erro tipo I e poder (10.000 repetições, semente 42)
 │   ├── testes.py          # t pareado e Wilcoxon pareado
 │   └── graficos/
 │       └── g2.py          # G2: estatística sob H₀, região de rejeição e p-valor
