@@ -17,18 +17,25 @@ st.markdown(
     "[Kanban](https://github.com/orgs/lab-medicao-experimentacao/projects/4/views/2)"
 )
 st.caption("P2 · t pareado × Wilcoxon pareado")
-st.info("Trabalho em desenvolvimento. Os dados e resultados ainda serão incluídos.")
 
 st.header("1. Cenário")
 st.markdown(
-    "**Pergunta:** a definir.\n\n"
-    "**H₀:** a definir.\n\n"
-    "**H₁:** a definir.\n\n"
+    "**Pergunta:** o cache de compilação altera o tempo de build do fzf?\n\n"
+    "Em cada par, a diferença é o tempo com cache menos o tempo sem cache. "
+    "Os testes são bicaudais para detectar tanto redução quanto aumento no tempo.\n\n"
+    "**t pareado:** H₀: a média das diferenças é zero. "
+    "H₁: a média das diferenças é diferente de zero.\n\n"
+    "**Wilcoxon pareado:** H₀: a distribuição das diferenças é simétrica em torno de zero. "
+    "Sob simetria, H₁: seu centro é diferente de zero.\n\n"
     f"**Fonte e procedimento de coleta:** {amostra.FONTE}. Detalhes em "
     "[`data/README.md`](https://github.com/lab-medicao-experimentacao/"
     "lab04-teste-de-hipotese/blob/main/data/README.md).\n\n"
     f"**Quantidade de pares:** {amostra.n_pares()}.\n\n"
-    "**Expectativa antes da simulação:** a registrar pelo grupo, com justificativa."
+    "**Expectativa para a Sprint 2:** com diferenças próximas da normalidade, "
+    "esperamos maior poder do t pareado. Com valores extremos e diferenças ainda "
+    "simétricas, esperamos que o Wilcoxon ganhe vantagem, pois usa postos e limita "
+    "a influência da magnitude dos extremos. Essa previsão foi registrada após o "
+    "exemplo da Sprint 1, para comparação com as simulações da Sprint 2."
 )
 
 st.header("2. Os dados")
@@ -56,7 +63,10 @@ st.header("3. Como os testes funcionam")
 @st.cache_data
 def exemplo_simulado():
     antes, depois = aplicacao.conjunto_exemplo()
-    return antes, depois, aplicacao.aplicar_testes(antes, depois)
+    resultados = aplicacao.aplicar_testes(
+        antes, depois, alternativa=aplicacao.ALTERNATIVA, alfa=aplicacao.ALFA
+    )
+    return antes, depois, resultados
 
 
 antes, depois, resultados = exemplo_simulado()
@@ -75,7 +85,7 @@ st.caption(
     f"Dados simulados com o gerador calibrado pela amostra real: "
     f"{aplicacao.N_EXEMPLO} pares, efeito "
     f"verdadeiro de {aplicacao.EFEITO_EXEMPLO:.0%} de redução no tempo de build, "
-    f"semente {aplicacao.SEMENTE}, teste bicaudal (provisório) e "
+    f"semente {aplicacao.SEMENTE}, testes bicaudais e "
     f"α = {aplicacao.ALFA:.2f}".replace(".", ",") + "."
 )
 col_antes, col_depois = st.columns(2)
@@ -83,4 +93,4 @@ col_antes.metric("Mediana antes", f"{mediana_antes:.1f} s".replace(".", ","))
 col_depois.metric("Mediana depois", f"{mediana_depois:.1f} s".replace(".", ","))
 st.dataframe(resultados, hide_index=True)
 st.caption("Estatística: t para o t pareado e W+ para o Wilcoxon pareado.")
-st.markdown(aplicacao.interpretar(resultados, aplicacao.EFEITO_EXEMPLO))
+st.markdown(aplicacao.interpretar(resultados, aplicacao.EFEITO_EXEMPLO, alfa=aplicacao.ALFA))
