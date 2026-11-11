@@ -16,7 +16,7 @@ from estilo import ROTULOS
 N_EXEMPLO = 15
 EFEITO_EXEMPLO = 0.02  # redução verdadeira de 2% no tempo de build
 SEMENTE = 42
-ALTERNATIVA = "two-sided"  # provisório até o grupo decidir H₁
+ALTERNATIVA = "two-sided"  # Detecta redução ou aumento no tempo de build.
 ALFA = 0.05
 
 MEDIDAS = {"t": "d_z", "wilcoxon": "r rank-bisserial"}
