@@ -3,6 +3,7 @@
 import streamlit as st
 
 import amostra
+import analise_real
 import aplicacao
 from graficos import g1, g2
 
@@ -94,3 +95,13 @@ col_depois.metric("Mediana depois", f"{mediana_depois:.1f} s".replace(".", ","))
 st.dataframe(resultados, hide_index=True)
 st.caption("Estatística: t para o t pareado e W+ para o Wilcoxon pareado.")
 st.markdown(aplicacao.interpretar(resultados, aplicacao.EFEITO_EXEMPLO, alfa=aplicacao.ALFA))
+
+st.header("6. Dados reais")
+resultados_reais, resumo_real = analise_real.analisar()
+st.caption("Testes bicaudais sobre as diferenças pareadas com cache − sem cache, com α = 0,05.")
+st.dataframe(
+    resultados_reais,
+    hide_index=True,
+    column_config={"p-valor": st.column_config.NumberColumn(format="%.3e")},
+)
+st.markdown(resumo_real)
