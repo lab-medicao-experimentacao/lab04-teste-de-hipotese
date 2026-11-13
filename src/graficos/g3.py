@@ -61,13 +61,14 @@ def _pct(valor):
 def explicacao(resultados, alfa=ALFA):
     """Produz quatro frases que interpretam o G3 com as taxas observadas."""
     dados = dados_erro_tipo_i(resultados).set_index(["cenario", "teste"])
+    repeticoes = f"{int(dados['repeticoes'].iloc[0]):,}".replace(",", ".")
     taxa = lambda c, t: float(dados.loc[(c, t), "taxa_rejeicao"])
     base = f"t = {_pct(taxa('base', 't'))} e Wilcoxon = {_pct(taxa('base', 'wilcoxon'))}"
     pequeno = f"t = {_pct(taxa('n_pequeno', 't'))} e Wilcoxon = {_pct(taxa('n_pequeno', 'wilcoxon'))}"
     outliers = f"t = {_pct(taxa('outliers', 't'))} e Wilcoxon = {_pct(taxa('outliers', 'wilcoxon'))}"
     assimetrico = f"t = {_pct(taxa('assimetrico', 't'))} e Wilcoxon = {_pct(taxa('assimetrico', 'wilcoxon'))}"
     return " ".join([
-        f"As barras mostram, em {int(dados['repeticoes'].iloc[0]):,} repetições por situação, a proporção de rejeições quando o efeito é zero; a linha tracejada marca os {alfa:.0%} esperados.".replace(",", ".", 1),
+        f"As barras mostram, em {repeticoes} repetições por situação, a proporção de rejeições quando o efeito é zero; a linha tracejada marca os {alfa:.0%} esperados.",
         f"No cenário base ({base}) e com n pequeno ({pequeno}), as taxas ficaram próximas do nível nominal, embora o Wilcoxon com n = 8 seja conservador.",
         f"Com outliers, o t ficou um pouco abaixo do nominal ({outliers}), enquanto o Wilcoxon permaneceu perto de {alfa:.0%}.",
         f"No ruído assimétrico ({assimetrico}), ambos ficaram liberais, sobretudo o Wilcoxon, pois a simetria exigida por esse teste foi violada de propósito.",
