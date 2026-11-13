@@ -69,6 +69,6 @@ def explicacao(resultados, alfa=ALFA):
     return " ".join([
         f"As barras mostram, em {int(dados['repeticoes'].iloc[0]):,} repetições por situação, a proporção de rejeições quando o efeito é zero; a linha tracejada marca os {alfa:.0%} esperados.".replace(",", ".", 1),
         f"No cenário base ({base}) e com n pequeno ({pequeno}), as taxas ficaram próximas do nível nominal, embora o Wilcoxon com n = 8 seja conservador.",
-        f"Com outliers, o t ficou conservador ({outliers}), enquanto o Wilcoxon permaneceu perto de {alfa:.0%}.",
+        f"Com outliers, o t ficou um pouco abaixo do nominal ({outliers}), enquanto o Wilcoxon permaneceu perto de {alfa:.0%}.",
         f"No ruído assimétrico ({assimetrico}), ambos ficaram liberais, sobretudo o Wilcoxon, pois a simetria exigida por esse teste foi violada de propósito.",
     ])

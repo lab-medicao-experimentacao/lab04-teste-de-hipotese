@@ -63,7 +63,7 @@ Para as simulações da Sprint 2, esperamos maior poder do t pareado com diferen
 - `doc/`: enunciado e documentação de apoio. A entrega final será o dashboard, conforme o enunciado.
 - `data/`: amostra real em CSV e documentação de sua origem e coleta.
 - `scripts/`: script que coletou a amostra real; não faz parte do dashboard.
-- `src/`: código de geração dos dados simulados, aplicação dos testes e construção dos gráficos G1 e G2. Os arquivos serão acrescentados nas respectivas tarefas.
+- `src/`: geração dos dados simulados, aplicação dos testes, simulações Q1–Q3 e construção dos gráficos G1 a G4.
 - `tests/`: testes de unidade (biblioteca padrão `unittest`).
 
 A página `src/app.py` apresenta as sete seções da entrega final: cenário, G1 a G4, análise dos dados reais e conclusão. As simulações usam 10.000 repetições por cenário e tamanho de efeito, com semente fixa.
@@ -103,6 +103,6 @@ Com o ambiente ativo, os testes de unidade rodam a partir da raiz do repositóri
 python -m unittest discover -s tests -v
 ```
 
-As simulações deverão usar semente fixa, por exemplo `numpy.random.default_rng(42)`, para permitir a reprodução dos resultados.
+As simulações usam semente fixa 42 (`numpy.random.default_rng`) e parâmetros estimados da amostra real, o que permite reproduzir os resultados.
 
 
