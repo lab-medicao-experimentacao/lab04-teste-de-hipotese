@@ -12,7 +12,7 @@ st.set_page_config(page_title="Lab04 — Testes de hipótese", layout="wide")
 
 st.title("Testes de hipótese por dentro")
 st.markdown(
-    "[Dashboard local](http://localhost:8501) · "
+    "[Dashboard](https://lab04-teste-de-hipotese.streamlit.app/) · "
     "[Repositório](https://github.com/lab-medicao-experimentacao/"
     "lab04-teste-de-hipotese) · "
     "[Kanban](https://github.com/orgs/lab-medicao-experimentacao/projects/4/views/2)"

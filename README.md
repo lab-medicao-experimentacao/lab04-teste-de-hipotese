@@ -5,7 +5,7 @@ Laboratório de Medição e Experimentação de Software para comparar testes de
 - [Repositório](https://github.com/lab-medicao-experimentacao/lab04-teste-de-hipotese)
 - [Kanban do grupo](https://github.com/orgs/lab-medicao-experimentacao/projects/4/views/2)
 - [Enunciado completo](doc/enunciado.md)
-- [Dashboard local](http://localhost:8501) (após iniciar o ambiente).
+- [Dashboard](https://lab04-teste-de-hipotese.streamlit.app/) (publicado no Streamlit Community Cloud; localmente, em http://localhost:8501).
 
 ## Decisões do grupo
 
