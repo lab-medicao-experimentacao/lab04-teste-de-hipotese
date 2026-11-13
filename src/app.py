@@ -5,7 +5,7 @@ import streamlit as st
 import amostra
 import analise_real
 import aplicacao
-from graficos import g1, g2
+from graficos import exploracao, g1, g2, g3, g4
 
 
 st.set_page_config(page_title="Lab04 — Testes de hipótese", layout="wide")
@@ -96,6 +96,25 @@ st.dataframe(resultados, hide_index=True)
 st.caption("Estatística: t para o t pareado e W+ para o Wilcoxon pareado.")
 st.markdown(aplicacao.interpretar(resultados, aplicacao.EFEITO_EXEMPLO, alfa=aplicacao.ALFA))
 
+st.header("4. Erro tipo I")
+
+
+@st.cache_data
+def resultados_simulacao():
+    """Resultados reproduzíveis de Q1 a Q3, calculados uma vez por sessão."""
+    import simulacao
+
+    return simulacao.simular_tudo()
+
+
+resultados_simulados = resultados_simulacao()
+st.plotly_chart(g3.figura(resultados_simulados), width="stretch")
+st.markdown("**Explicação do erro tipo I:** " + g3.explicacao(resultados_simulados))
+
+st.header("5. Poder")
+st.plotly_chart(g4.figura(resultados_simulados), width="stretch")
+st.markdown("**Explicação do poder:** " + g4.explicacao(resultados_simulados))
+
 st.header("6. Dados reais")
 resultados_reais, resumo_real = analise_real.analisar()
 st.caption("Testes bicaudais sobre as diferenças pareadas com cache − sem cache, com α = 0,05.")
@@ -105,3 +124,47 @@ st.dataframe(
     column_config={"p-valor": st.column_config.NumberColumn(format="%.3e")},
 )
 st.markdown(resumo_real)
+
+with st.expander("Explorar os dados reais durante a apresentação"):
+    st.markdown(
+        "Use os controles do Plotly para passar o cursor sobre uma observação, "
+        "ocultar uma condição pela legenda e ampliar uma faixa do gráfico."
+    )
+    visao_real = st.radio(
+        "Visualização",
+        ("Linhas dos pares", "Distribuição das diferenças"),
+        horizontal=True,
+    )
+    sem_cache, com_cache = amostra.pares()
+    if visao_real == "Linhas dos pares":
+        st.plotly_chart(exploracao.pares(sem_cache, com_cache), width="stretch")
+        st.caption(
+            "Cada linha é uma rodada. A queda consistente entre os extremos da "
+            "linha deixa visível por que a análise precisa respeitar o pareamento."
+        )
+    else:
+        st.plotly_chart(exploracao.diferencas(sem_cache, com_cache), width="stretch")
+        st.caption(
+            "Valores abaixo de zero indicam builds mais rápidos com cache; a linha "
+            "tracejada representa ausência de diferença entre as condições."
+        )
+
+st.header("7. Conclusão")
+st.markdown(
+    "Antes de simular, esperávamos que o t pareado tivesse mais poder quando as "
+    "diferenças se comportassem aproximadamente como uma distribuição normal e "
+    "que o Wilcoxon ganhasse com valores extremos. Os resultados confirmaram essa "
+    "previsão: o t foi um pouco mais potente no cenário base e com n pequeno, "
+    "enquanto o Wilcoxon foi claramente melhor quando havia outliers.\n\n"
+    "Para este cenário, recomendamos o **t pareado** se a distribuição das "
+    "diferenças não tiver outliers relevantes e a média for a medida de interesse; "
+    "ele preservou o erro tipo I e teve mais poder nessas condições. Com outliers "
+    "simétricos, recomendamos o **Wilcoxon pareado**, pois manteve a taxa próxima "
+    "de 5% e detectou mais efeitos. Não usaríamos a aparente vantagem do Wilcoxon "
+    "com ruído muito assimétrico para decidir, porque seu pressuposto de simetria "
+    "foi violado e o teste ficou liberal.\n\n"
+    "Nos 30 pares reais, os dois testes rejeitaram H₀ e apontaram uma redução "
+    "grande do tempo com cache. A principal limitação é que as medições foram "
+    "feitas em uma única máquina e projeto, sob uso normal, portanto a magnitude "
+    "do ganho não deve ser generalizada para outros ambientes sem nova coleta."
+)

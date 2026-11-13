@@ -45,7 +45,10 @@ Para as simulações da Sprint 2, esperamos maior poder do t pareado com diferen
 │   ├── testes.py          # t pareado e Wilcoxon pareado
 │   └── graficos/
 │       ├── g1.py          # G1: histogramas real × simulado de cada condição
-│       └── g2.py          # G2: estatística sob H₀, região de rejeição e p-valor
+│       ├── g2.py          # G2: estatística sob H₀, região de rejeição e p-valor
+│       ├── g3.py          # G3: taxas de erro tipo I por situação simulada
+│       ├── g4.py          # G4: curvas de poder por efeito e situação
+│       └── exploracao.py  # Visões interativas adicionais dos dados reais
 └── tests/
     ├── test_amostra.py
     ├── test_aplicacao.py
@@ -63,7 +66,7 @@ Para as simulações da Sprint 2, esperamos maior poder do t pareado com diferen
 - `src/`: código de geração dos dados simulados, aplicação dos testes e construção dos gráficos G1 e G2. Os arquivos serão acrescentados nas respectivas tarefas.
 - `tests/`: testes de unidade (biblioteca padrão `unittest`).
 
-A página `src/app.py` apresenta o cenário, G1, G2 e a interpretação dos testes aplicados a um conjunto simulado.
+A página `src/app.py` apresenta as sete seções da entrega final: cenário, G1 a G4, análise dos dados reais e conclusão. As simulações usam 10.000 repetições por cenário e tamanho de efeito, com semente fixa.
 
 ## Ambiente
 

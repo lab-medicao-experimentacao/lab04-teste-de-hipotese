@@ -22,7 +22,7 @@ class TestApp(unittest.TestCase):
     def test_g2_presente(self):
         at = AppTest.from_file(str(APP)).run(timeout=30)
         self.assertEqual(len(at.exception), 0, at.exception)
-        self.assertEqual(len(at.get("plotly_chart")), 2)  # G1 e G2
+        self.assertEqual(len(at.get("plotly_chart")), 5)  # G1 a G4 e exploração
         explicacao = " ".join(m.value for m in at.markdown)
         self.assertIn("Explicação dos testes", explicacao)
         self.assertIn("W⁺ = 50", explicacao)
